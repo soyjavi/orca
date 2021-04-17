@@ -1,6 +1,10 @@
-import dotenv from 'dotenv';
+export const C = {
+  SYMBOL: {
+    // CRYPTO
+    BTC: '₿',
+    ETH: 'Ξ',
 
-dotenv.config();
-const { DIFFICULTY, INSTANCE, SECRET } = process.env;
-
-export const C = {};
+    // FIAT
+    USD: '$',
+  },
+};

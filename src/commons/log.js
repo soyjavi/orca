@@ -21,17 +21,12 @@ class Log {
     return this;
   }
 
-  /*
-  color
-  Values: 'black' | 'red' | 'green' | 'yellow' | 'blue' | 'magenta' | 'cyan' | 'white' | 'gray'
-  */
-
-  color(value) {
-    this.instance.color = value;
-  }
-
   clear() {
     this.instance.clear();
+  }
+
+  stop() {
+    this.instance.stop();
   }
 
   text(value) {
