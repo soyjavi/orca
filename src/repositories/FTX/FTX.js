@@ -117,14 +117,15 @@ class FTX {
 
   order({
     market,
-    side = 'buy',
     price = 0,
-    type = 'market',
+    side = 'buy',
     size = 1,
+    type = 'market',
+    // Optional
     reduceOnly = false,
     ioc = false,
     postOnly = false,
-    clientId = null,
+    clientId,
   } = {}) {
     return this.ftx.request({
       method: 'POST',
@@ -154,11 +155,11 @@ class FTX {
     });
   }
 
-  removeOrder(id) {
+  cancelOrder(id) {
     return this.ftx.request({ method: 'DELETE', path: `/orders/${id}` });
   }
 
-  removeAllOrders() {
+  cancelOrders() {
     return this.ftx.request({ method: 'DELETE', path: `/orders` });
   }
 

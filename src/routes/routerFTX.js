@@ -136,14 +136,14 @@ RouterFTX.put('/order/:id', props, ({ props: { id, price, size } }, response) =>
 
 RouterFTX.delete('/order/:id', props, ({ props: { id } }, response) => {
   new FTX()
-    .removeOrder(id)
+    .cancelOrder(id)
     .then((order = {}) => response.json(order))
     .catch((error) => response.json({ error }));
 });
 
 RouterFTX.delete('/orders', (request, response) => {
   new FTX()
-    .removeAllOrders()
+    .cancelOrders()
     .then((order = {}) => response.json(order))
     .catch((error) => response.json({ error }));
 });
