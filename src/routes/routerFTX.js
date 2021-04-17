@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { FTX } from '@services';
+import { FTX } from '@repositories';
 import { props } from '@middlewares';
 
 const RouterFTX = Router();
@@ -12,14 +12,14 @@ RouterFTX.get('/', async (request, response) =>
   new FTX()
     .account()
     .then((account) => response.json(account))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.get('/wallet', async (request, response) =>
   new FTX()
     .wallet()
     .then((account) => response.json(account))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 // -----------------------------------------------------------------------------
@@ -29,14 +29,14 @@ RouterFTX.get('/wallet/deposits', (request, response) =>
   new FTX()
     .deposits()
     .then((deposits = []) => response.json({ deposits }))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.get('/wallet/:coin/deposit', props, ({ props: { coin } }, response) =>
   new FTX()
     .deposit(coin)
     .then((address = {}) => response.json(address))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 // -----------------------------------------------------------------------------
@@ -46,28 +46,28 @@ RouterFTX.get('/wallet/:coin/withdrawal/fee', props, ({ props: { coin, address, 
   new FTX()
     .withdrawalFee({ coin, address, size })
     .then((fee = {}) => response.json(fee))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.post('/wallet/:coin/withdrawal', props, ({ props: { coin, address, size, tag, password, code } }, response) =>
   new FTX({ credentials: { password, code } })
     .withdrawal({ coin, address, size, tag })
     .then((withdrawal = {}) => response.json(withdrawal))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.get('/wallet/withdrawals', (request, response) => {
   new FTX()
     .withdrawals()
     .then((withdrawals = []) => response.json({ withdrawals }))
-    .catch((error) => response.json(error));
+    .catch((error) => response.json({ error }));
 });
 
 RouterFTX.get('/wallet/withdrawal/addresses', (request, response) =>
   new FTX()
     .withdrawalAddresses()
     .then((addresses = []) => response.json({ addresses }))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.post(
@@ -83,21 +83,21 @@ RouterFTX.post(
         tag,
       })
       .then((address = {}) => response.json(address))
-      .catch((error) => response.json(error)),
+      .catch((error) => response.json({ error })),
 );
 
 RouterFTX.delete('/wallet/withdrawal/address/:id', props, ({ props: { id } }, response) =>
   new FTX()
     .removeWithdrawalAddress(id)
     .then((message) => response.json({ message }))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.get('/wallet/coins', (request, response) =>
   new FTX()
     .coins()
     .then((coins = []) => response.json({ coins }))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 // -----------------------------------------------------------------------------
@@ -107,14 +107,14 @@ RouterFTX.get('/positions', (request, response) =>
   new FTX()
     .positions()
     .then((positions = []) => response.json({ positions }))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.get('/orders', (request, response) =>
   new FTX()
     .orders()
     .then((orders = []) => response.json({ orders }))
-    .catch((error) => response.json(error)),
+    .catch((error) => response.json({ error })),
 );
 
 RouterFTX.post(
@@ -124,14 +124,14 @@ RouterFTX.post(
     new FTX()
       .order({ market, side, price, type, size, reduceOnly, ioc, postOnly, clientId })
       .then((order = {}) => response.json(order))
-      .catch((error) => response.json(error)),
+      .catch((error) => response.json({ error })),
 );
 
 RouterFTX.put('/order/:id', props, ({ props: { id, price, size } }, response) => {
   new FTX()
     .updateOrder({ id, price, size })
     .then((order = {}) => response.json(order))
-    .catch((error) => response.json(error));
+    .catch((error) => response.json({ error }));
 });
 
 RouterFTX.delete('/order/:id', props, ({ props: { id } }, response) => {
@@ -145,14 +145,14 @@ RouterFTX.delete('/orders', (request, response) => {
   new FTX()
     .removeAllOrders()
     .then((order = {}) => response.json(order))
-    .catch((error) => response.json(error));
+    .catch((error) => response.json({ error }));
 });
 
 RouterFTX.get('/orders/history', (request, response) => {
   new FTX()
     .orders({ history: true })
     .then((orders = []) => response.json({ orders }))
-    .catch((error) => response.json(error));
+    .catch((error) => response.json({ error }));
 });
 
 // -----------------------------------------------------------------------------
@@ -162,14 +162,14 @@ RouterFTX.post('/convert/quote', props, ({ props: { fromCoin, toCoin, size } }, 
   new FTX()
     .convert({ fromCoin, toCoin, size })
     .then((quote) => response.json(quote))
-    .catch((error) => response.json(error));
+    .catch((error) => response.json({ error }));
 });
 
 RouterFTX.post('/convert/quote/:id', props, ({ props: { id } }, response) => {
   new FTX()
     .confirmConvert(id)
     .then((quote = {}) => response.json(quote))
-    .catch((error) => response.json(error));
+    .catch((error) => response.json({ error }));
 });
 
 export { RouterFTX };

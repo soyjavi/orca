@@ -1,4 +1,4 @@
-// import { ERROR } from '../common';
+import { ERROR } from '@commons';
 
 export default (req, res, next) => {
   // const {
@@ -20,8 +20,6 @@ export default (req, res, next) => {
   // }
 
   req.props = { ...req.params, ...req.query, ...req.body };
-
-  console.log('>>', req.props);
 
   return next();
 };

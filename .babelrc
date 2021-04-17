@@ -7,9 +7,12 @@
       {
         "root": ["./"],
         "alias": {
+          "@bots": "./src/bots",
+          "@commons": "./src/commons",
           "@middlewares": "./src/middlewares",
+          "@repositories": "./src/repositories",
           "@routes": "./src/routes",
-          "@services": "./src/services"
+          "@views": "./src/views"
         }
       }
     ]
