@@ -2,15 +2,8 @@ const crypto = require('crypto');
 const https = require('https');
 const querystring = require('querystring');
 
-const { FTX_KEY, FTX_SECRET } = process.env;
-
 class FTXRest {
-  constructor({
-    credentials: { key = FTX_KEY, secret = FTX_SECRET, password, code } = {},
-    subaccount,
-    timeout = 90 * 100,
-    userAgent,
-  } = {}) {
+  constructor({ credentials: { key, secret, password, code } = {}, subaccount, timeout = 90 * 100, userAgent } = {}) {
     this.userAgent = `orca@1.0.0${userAgent ? `:${userAgent}` : ''}`;
     this.timeout = timeout;
     this.agent = new https.Agent({

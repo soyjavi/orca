@@ -1,15 +1,24 @@
+import dotenv from 'dotenv';
 import { FTXRest } from './FTX.rest';
 import { activePositions, parseOrders, request as fetch } from './modules';
 
+dotenv.config();
+
+const { FTX_KEY, FTX_SECRET } = process.env;
+
 class FTX {
-  /*
- credentials: { key = FTX_KEY, secret = FTX_SECRET, password, code } = {},
- subaccount,
- timeout = 90 * 100,
- userAgent,
- */
-  constructor(props) {
-    this.ftx = new FTXRest(props);
+  constructor({
+    credentials: { key = FTX_KEY, secret = FTX_SECRET, password, code } = {},
+    subaccount,
+    timeout,
+    userAgent,
+  } = {}) {
+    this.ftx = new FTXRest({
+      credentials: { key, secret, password, code },
+      subaccount,
+      timeout,
+      userAgent,
+    });
   }
 
   // -----------------------------------------------------------------------------
@@ -106,17 +115,6 @@ class FTX {
     );
   }
 
-  /*
-  market	string	XRP-PERP	e.g. "BTC/USD" for spot, "XRP-PERP" for futures
-  side	string	sell	"buy" or "sell"
-  price	number	0.306525	Send null for market orders.
-  type	string	limit	"limit" or "market"
-  size	number	31431.0
-  reduceOnly	boolean	false	optional; default is false
-  ioc	boolean	false	optional; default is false
-  postOnly	boolean	false	optional; default is false
-  clientId	string	null	optional; client order id
-  */
   order({
     market,
     side = 'buy',
