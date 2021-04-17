@@ -3,7 +3,7 @@ import { FTX } from '@repositories';
 
 const NAME = '🤖 BuyBitoin';
 
-const BuyBitcoin = ({ credentials = {}, fromCoin = 'USD', minValue = 100 } = {}) =>
+export const BuyBitcoin = ({ credentials = {}, fromCoin = 'USD', minValue = 100 } = {}) =>
   new Promise((resolve, reject) => {
     const log = new Log(NAME, 'Starting...');
     const walletName = `${fromCoin} wallet`;
@@ -37,5 +37,3 @@ const BuyBitcoin = ({ credentials = {}, fromCoin = 'USD', minValue = 100 } = {})
         reject(error);
       });
   });
-
-export { BuyBitcoin };

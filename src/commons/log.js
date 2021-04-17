@@ -1,7 +1,7 @@
 import ora from 'ora';
 import chalk from 'chalk';
 
-const INDENT = 16;
+const INDENT = 14;
 
 class Log {
   constructor(prefix = '', welcomeMessage) {
@@ -30,7 +30,7 @@ class Log {
   }
 
   text(value) {
-    this.instance.text = `${chalk(this.prefix)}${value}`;
+    this.instance.text = `${chalk(this.prefix)}${chalk.dim(value)}`;
   }
 
   error(value) {

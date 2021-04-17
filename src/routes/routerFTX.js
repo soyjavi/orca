@@ -8,14 +8,14 @@ const RouterFTX = Router();
 // -----------------------------------------------------------------------------
 // -- Dashboard
 // -----------------------------------------------------------------------------
-RouterFTX.get('/', async (request, response) =>
+RouterFTX.get('/', (request, response) =>
   new FTX()
     .account()
     .then((account) => response.json(account))
     .catch((error) => response.json({ error })),
 );
 
-RouterFTX.get('/wallet', async (request, response) =>
+RouterFTX.get('/wallet', (request, response) =>
   new FTX()
     .wallet()
     .then((account) => response.json(account))
