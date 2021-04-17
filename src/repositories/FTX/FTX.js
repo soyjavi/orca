@@ -43,11 +43,11 @@ class FTX {
   // -----------------------------------------------------------------------------
   // -- withdrawalls
   // -----------------------------------------------------------------------------
-  withdrawalFee({ coin, address, size }) {
+  withdrawalFee({ coin, address, size } = {}) {
     return this.ftx.request({ path: '/wallet/withdrawal_fee', data: { coin, address, size } });
   }
 
-  withdrawal({ coin, address, size = 0, tag }) {
+  withdrawal({ coin, address, size = 0, tag } = {}) {
     return this.ftx.request({
       method: 'POST',
       path: '/wallet/withdrawals',
@@ -63,7 +63,7 @@ class FTX {
     return this.ftx.request({ path: '/wallet/saved_addresses' });
   }
 
-  createWithdrawalAddress({ coin, address, addressName, isPrimetrust = true, tag }) {
+  createWithdrawalAddress({ coin, address, addressName, isPrimetrust = true, tag } = {}) {
     return this.ftx.request({
       method: 'POST',
       path: '/wallet/saved_addresses',
@@ -127,7 +127,7 @@ class FTX {
     ioc = false,
     postOnly = false,
     clientId = null,
-  }) {
+  } = {}) {
     return this.ftx.request({
       method: 'POST',
       path: '/orders',
@@ -145,7 +145,7 @@ class FTX {
     });
   }
 
-  updateOrder({ id, price, size }) {
+  updateOrder({ id, price, size } = {}) {
     return this.ftx.request({
       method: 'POST',
       path: `/orders/${id}/modify`,
@@ -167,17 +167,13 @@ class FTX {
   // -----------------------------------------------------------------------------
   // -- exchange
   // -----------------------------------------------------------------------------
-  convert({ fromCoin, toCoin, size = 0 }) {
-    return new Promise(async (resolve, reject) => {
-      const { quoteId } = await this.ftx
+  convert({ fromCoin, toCoin, size = 0 } = {}) {
+    return new Promise((resolve, reject) => {
+      this.ftx
         .request({ method: 'POST', path: `/otc/quotes`, data: { fromCoin, toCoin, size } })
+        .then(({ quoteId }) => this.ftx.request({ path: `/otc/quotes/${quoteId}` }))
+        .then(resolve)
         .catch(reject);
-
-      if (quoteId)
-        this.ftx
-          .request({ path: `/otc/quotes/${quoteId}` })
-          .then(resolve)
-          .catch(reject);
     });
   }
 
