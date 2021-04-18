@@ -21,7 +21,7 @@ export const CloneOrders = ({ master = {}, credentials = {} } = {}) =>
       const orders = await masterFTX.orders().catch(handleError);
       if (orders.length === 0) {
         await cancelOrders(branchFTX).catch(handleError);
-        return log.info('No opened orders.');
+        return log.info('No active orders.');
       }
 
       log.text(`Found ${orders.length} active orders, fetching branch orders...`);

@@ -1,7 +1,7 @@
 import { getSymbol, Log } from '@commons';
 import { FTX } from '@repositories';
 
-const NAME = '🤖 BuyBitoin';
+const NAME = '🤖 BuyBitcoin';
 
 export const BuyBitcoin = ({ credentials = {}, fromCoin = 'USD', minValue = 100 } = {}) =>
   new Promise((resolve, reject) => {
@@ -31,6 +31,7 @@ export const BuyBitcoin = ({ credentials = {}, fromCoin = 'USD', minValue = 100 
       .then((success) => {
         console.log(success);
         log.succeed(`Converted ${getSymbol(fromCoin)}${usd} to ${getSymbol('BTC')}${satoshis}.`);
+        resolve(true);
       })
       .catch((error) => {
         log.error(error ? error.message : 'Unknown error.');
