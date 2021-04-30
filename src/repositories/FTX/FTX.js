@@ -4,12 +4,12 @@ import { activePositions, parseOrders, request as fetch } from './modules';
 
 dotenv.config();
 
-const { FTX_KEY, FTX_SECRET } = process.env;
+const { FTX_KEY, FTX_SECRET, SUBACCOUNT } = process.env;
 
 class FTX {
   constructor({
     credentials: { key = FTX_KEY, secret = FTX_SECRET, password, code } = {},
-    subaccount,
+    subaccount = SUBACCOUNT,
     timeout,
     userAgent,
   } = {}) {

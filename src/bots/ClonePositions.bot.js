@@ -10,12 +10,12 @@ const handleError = (error) => {
   throw new Error(error);
 };
 
-export const ClonePositions = ({ master = {}, credentials = {} } = {}) =>
+export const ClonePositions = ({ master = {}, branch = {} } = {}) =>
   new Promise(async (resolve, reject) => {
     try {
       const log = new Log(NAME);
-      const masterFTX = new FTX(master.credentials);
-      const branchFTX = new FTX(credentials);
+      const masterFTX = new FTX(master);
+      const branchFTX = new FTX(branch);
 
       log.text('Fetching opened positions...');
       const positions = await masterFTX.positions().catch(handleError);

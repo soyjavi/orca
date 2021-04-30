@@ -1,7 +1,7 @@
 import ora from 'ora';
 import chalk from 'chalk';
 
-const INDENT = 14;
+const INDENT = 16;
 
 class Log {
   constructor(prefix = '', welcomeMessage) {
