@@ -1,5 +1,6 @@
 import http from 'http';
 
+import path from 'path';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
@@ -10,9 +11,10 @@ import prettyError from 'pretty-error';
 
 import { C, Log } from '@commons';
 import { error, request, response } from '@middlewares';
+import { Telegram } from '@repositories';
 import { RouterFTX } from '@routes';
 
-import { BuyBitcoin } from '@bots';
+import { Bots } from '@bots';
 
 dotenv.config();
 prettyError.start();
@@ -31,10 +33,21 @@ app.use(compression());
 app.use(expressPrettier({ alwaysOn: true, fallbackOnError: false }));
 app.use(request);
 
+// -- Statics
+app.use('/static', express.static('assets'));
+
+// app.use(express.static(path.join(__dirname, 'assets')));
+
 // -- Endpoints
 log.text('Loading endpoints...');
-app.get('/', (req, res) => res.json(C));
 app.use('/ftx', RouterFTX);
+app.get('/', (req, res) => res.json(C));
+
+// app.get('/*', (req, res) => {
+//   console.log('>>>', path.join(__dirname + '/../assets/client.html'));
+//   res.sendFile(path.join(__dirname + '/../assets/client.html'));
+// });
+
 app.use(response);
 
 // -- Global Error Handler
@@ -44,12 +57,8 @@ app.use(error);
 const listener = server.listen(PORT, async () => {
   log.succeed(`Up & Ready on port ${listener.address().port}.`);
 
-  BuyBitcoin();
-
-  BuyBitcoin({
-    fromCoin: 'XRP',
-    minValue: 1000,
-  });
+  Telegram.message(`Up & Ready on port ${listener.address().port}.`);
+  Bots.start();
 });
 
 process.on('uncaughtException', () => server.close());
