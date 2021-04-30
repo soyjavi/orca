@@ -1,5 +1,7 @@
+import { Storage } from 'vanilla-storage';
+
 import { C, getSymbol, Log } from '@commons';
-import { FTX } from '@repositories';
+import { FTX, Telegram } from '@repositories';
 
 const NAME = '🤖 ClonePositions';
 const CLIENT_ID_PREFIX = `${C.NAME}@`;
@@ -25,11 +27,11 @@ export const ClonePositions = ({ master = {}, credentials = {} } = {}) =>
 
       log.text(`Found ${positions.length} openend positions, fetching branch...`);
       const branchAccount = await branchFTX.account();
-      // console.log(branchAccount);
+
+      const store = new Storage(C.STORE.POSITIONS);
 
       positions.forEach((position) => {
         const {
-          //
           cost,
           size,
           netSize,
@@ -41,7 +43,7 @@ export const ClonePositions = ({ master = {}, credentials = {} } = {}) =>
           recentAverageOpenPrice: averagePrice,
         } = position;
 
-        const data = {
+        const order = {
           client: `${CLIENT_ID_PREFIX}${market || future}@`,
           market: market || future,
           price: null,
@@ -51,7 +53,20 @@ export const ClonePositions = ({ master = {}, credentials = {} } = {}) =>
           cost,
         };
 
-        log.text('Analizing ');
+        log.text(`Analizing position ${order.market}`);
+
+        const storedPosition = store.find({
+          market: order.market,
+          size: order.size,
+          cost: order.cost,
+        });
+
+        if (!storedPosition) {
+          store.push(order);
+          Telegram.message(
+            `NEW POSITION: ${order.market} size ${order.size} for ${order.cost} (entryPrice ${newPosition.entryPrice})`,
+          );
+        }
 
         console.log(position);
       });

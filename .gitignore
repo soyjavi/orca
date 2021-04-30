@@ -1,9 +1,8 @@
 # folders
-
 .parcel-cache/
 assets/client/
 node_modules/
-
+store/
 
 # files
 .env
