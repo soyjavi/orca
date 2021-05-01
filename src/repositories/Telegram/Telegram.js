@@ -1,7 +1,8 @@
-const { Telegram: Telegraf } = require('telegraf');
 import { Storage } from 'vanilla-storage';
 
 import { C } from '@commons';
+
+const { Telegram: Telegraf } = require('telegraf');
 
 const { TELEGRAM_BOT, TELEGRAM_CHANNEL_MASTER } = process.env;
 

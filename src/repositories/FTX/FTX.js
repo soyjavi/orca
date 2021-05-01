@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 import { FTXRest } from './FTX.rest';
 import { activePositions, parseOrders, request as fetch } from './modules';
 

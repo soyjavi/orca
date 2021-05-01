@@ -8,5 +8,6 @@ store/
 .env
 .env.test
 .eslintcache
+.nvmrc
 yarn-debug.log*
 yarn-error.log*

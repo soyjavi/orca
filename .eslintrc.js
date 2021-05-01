@@ -17,14 +17,23 @@ module.exports = {
       'error',
       {
         alphabetize: {
-          caseInsensitive: true,
           order: 'asc',
+          caseInsensitive: true,
         },
-        groups: ['builtin', 'external', 'internal'],
+        groups: ['external', 'internal', 'builtin'],
+        pathGroups: [
+          {
+            pattern: '@**',
+            group: 'internal',
+            position: 'before',
+          },
+        ],
         'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: [],
       },
     ],
+
     'max-len': [1, 120, { ignoreComments: true, tabWidth: 2 }],
-    'sort-keys': ['warn', 'asc', { caseSensitive: true, minKeys: 2, natural: false }],
+    // 'sort-keys': ['warn', 'asc', { caseSensitive: true, minKeys: 2, natural: false }],
   },
 };

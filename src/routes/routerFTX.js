@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { FTX } from '@repositories';
 import { props } from '@middlewares';
+import { FTX } from '@repositories';
 
 const RouterFTX = Router();
 

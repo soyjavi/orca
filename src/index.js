@@ -1,6 +1,3 @@
-import http from 'http';
-
-import path from 'path';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cors from 'cors';
@@ -9,12 +6,14 @@ import express from 'express';
 import expressPrettier from 'express-prettier';
 import prettyError from 'pretty-error';
 
+import { Bots } from '@bots';
 import { C, Log } from '@commons';
 import { error, request, response } from '@middlewares';
 import { Telegram } from '@repositories';
 import { RouterFTX } from '@routes';
 
-import { Bots } from '@bots';
+import http from 'http';
+import path from 'path';
 
 dotenv.config();
 prettyError.start();
@@ -57,7 +56,7 @@ app.use(error);
 const listener = server.listen(PORT, async () => {
   log.succeed(`Up & Ready on port ${listener.address().port}.`);
 
-  Telegram.message(`Up & Ready on port ${listener.address().port}.`);
+  // Telegram.message(`Up & Ready on port ${listener.address().port}.`);
   Bots.start();
 });
 

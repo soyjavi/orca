@@ -1,2 +1,1 @@
-export const activePositions = (positions = []) =>
-  positions.filter(({ size = 0 }) => size > 0);
+export const activePositions = (positions = []) => positions.filter(({ size = 0 }) => size > 0);

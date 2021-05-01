@@ -1,5 +1,5 @@
-import ora from 'ora';
 import chalk from 'chalk';
+import ora from 'ora';
 
 const INDENT = 16;
 
