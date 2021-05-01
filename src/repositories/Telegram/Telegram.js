@@ -6,7 +6,7 @@ import { C } from '@commons';
 const { TELEGRAM_BOT, TELEGRAM_CHANNEL_MASTER } = process.env;
 
 export const Telegram = {
-  message: (message = 'Hello world ', emoji = '🤖') => {
+  message: (message = 'Hello world ', emoji = '') => {
     const telegraf = new Telegraf(TELEGRAM_BOT);
 
     telegraf

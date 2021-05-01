@@ -10,6 +10,7 @@ export const C = {
   VERSION,
   INSTANCE: `🦈 ${NAME} v${VERSION}`,
 
+  DEFAULT_SYMBOL: 'USD',
   SYMBOL: {
     // CRYPTO
     BTC: '₿',
@@ -21,7 +22,7 @@ export const C = {
 
   STORE: {
     MESSAGES: { filename: 'messages' },
-    POSITIONS: { filename: 'positions', secret: SECRET },
+    POSITIONS: { filename: 'positions', secret: SECRET, defaults: { default: [] } },
     ORDERS: { filename: 'orders', secret: SECRET },
   },
 };

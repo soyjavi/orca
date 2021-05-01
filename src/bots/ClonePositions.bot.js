@@ -30,6 +30,8 @@ export const ClonePositions = ({ master = {}, branch = {} } = {}) =>
 
       const store = new Storage(C.STORE.POSITIONS);
 
+      const orders = [];
+
       positions.forEach((position) => {
         const {
           cost,
@@ -42,11 +44,14 @@ export const ClonePositions = ({ master = {}, branch = {} } = {}) =>
           entryPrice,
           recentAverageOpenPrice: averagePrice,
         } = position;
+        // console.log(position);
+
+        const client = `${CLIENT_ID_PREFIX}${market || future}:${side}:${size}`;
 
         const order = {
-          client: `${CLIENT_ID_PREFIX}${market || future}@`,
+          client,
           market: market || future,
-          price: null,
+          price: undefined,
           side,
           size,
           type: 'market',
@@ -54,58 +59,23 @@ export const ClonePositions = ({ master = {}, branch = {} } = {}) =>
         };
 
         log.text(`Analizing position ${order.market}`);
-
-        const storedPosition = store.find({
-          market: order.market,
-          size: order.size,
-          cost: order.cost,
-        });
+        const storedPosition = store.find({ client });
 
         if (!storedPosition) {
           store.push(order);
           Telegram.message(
-            `NEW POSITION: ${order.market} size ${order.size} for ${order.cost} (entryPrice ${newPosition.entryPrice})`,
+            `Position \`${side.toUpperCase()}\` ${size} \`${order.market}\` for ${getSymbol()}${Math.abs(
+              order.cost,
+            )} (_Entry price ${getSymbol()}${entryPrice}_)`,
+            side === 'buy' ? '🟩 ' : '🟥',
           );
+          orders.push(order);
         }
-
-        console.log(position);
       });
+
+      log.succeed(`${orders.length} positions copied correctly.`);
     } catch (error) {
       log.error(error ? error.message : 'Unknown error.');
       reject(error);
     }
-
-    // console.log({ masterPositions });
-
-    // const walletName = `${fromCoin} wallet`;
-
-    // log.text(`Searching ${walletName}...`);
-    // const ftx = new FTX({ credentials });
-
-    // ftx
-    //   .wallet()
-    //   .then((wallets) => {
-    //     const wallet = wallets.find((item) => item.coin === fromCoin);
-    //     if (!wallet) throw new Error(`${walletName} not found.`);
-
-    //     const { usdValue } = wallet;
-    //     log.text(`${walletName} detected with ${getSymbol(fromCoin)}${usdValue.toFixed(2)}`);
-    //     if (usdValue < minValue) throw new Error(`${walletName} without enough funds.`);
-
-    //     return ftx.convert({ fromCoin, toCoin: 'BTC', size: usdValue });
-    //   })
-    //   .then((quote = {}) => {
-    //     console.log(quote);
-    //     log.text(`Quote ${quote.id} created successfully.`);
-    //     return ftx.confirmConvert(quote.id);
-    //   })
-    //   .then((success) => {
-    //     console.log(success);
-    //     log.succeed(`Converted ${getSymbol(fromCoin)}${usd} to ${getSymbol('BTC')}${satoshis}.`);
-    //     resolve(true);
-    //   })
-    //   .catch((error) => {
-    //     log.error(error ? error.message : 'Unknown error.');
-    //     reject(error);
-    //   });
   });

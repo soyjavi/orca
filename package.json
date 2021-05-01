@@ -7,17 +7,17 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "start": "yarn start:babelnode",
-    "start2": "yarn build:client && yarn start:babelnode",
+    "start": "npm run start:babelnode",
+    "start2": "npm run build:client && npm run start:babelnode",
     "start:babelnode": "NODE_ENV=production babel-node ./src/index.js",
     "start:babel": "npm run build && NODE_ENV=production node ./dist/index.js",
-    "start:dev": "yarn build:client && yarn start:nodemon",
+    "start:dev": "npm run build:client && npm run start:nodemon",
     "start:nodemon": "nodemon --exec NODE_ENV=development babel-node src/index.js --trace-warnings",
     "start:client": "parcel serve ./src/client/index.html --out-dir assets/client",
     "build": "babel -d ./dist ./src -s",
     "build:client": "parcel build ./src/client/index.jsx --out-dir assets/client",
     "lint": "eslint src --fix",
-    "test": "yarn build && jest src --runInBand --collectCoverage"
+    "test": "npm build && jest src --runInBand --collectCoverage"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
