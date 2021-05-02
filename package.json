@@ -13,9 +13,9 @@
     "start:babel": "npm run build && NODE_ENV=production node ./dist/index.js",
     "start:dev": "npm run build:client && npm run start:nodemon",
     "start:nodemon": "nodemon --exec NODE_ENV=development babel-node src/index.js --trace-warnings",
-    "start:client": "parcel serve ./src/client/index.html --out-dir assets/client",
+    "start:client": "parcel serve ./src/client/index.html --dist-dir assets/client --no-cache",
     "build": "babel -d ./dist ./src -s",
-    "build:client": "parcel build ./src/client/index.jsx --out-dir assets/client",
+    "build:client": "parcel build ./src/client/index.jsx --dist-dir assets/client",
     "lint": "eslint src --fix",
     "test": "npm build && jest src --runInBand --collectCoverage"
   },
@@ -33,6 +33,7 @@
     "pretty-error": "^3.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "telegraf": "^4.3.0",
     "vanilla-storage": "^0.3.11"
   },
@@ -46,10 +47,13 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
-    "parcel-bundler": "^1.12.5",
-    "prettier": "^2.2.1"
+    "parcel": "^2.0.0-beta.2",
+    "prettier": "^2.2.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^22.0.0"
   },
   "engines": {
     "node": "12.x"

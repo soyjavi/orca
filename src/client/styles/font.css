@@ -1,0 +1,10 @@
+.font-XL {
+  font-size: var(--font-size-XL);
+}
+
+.bold {
+  /* font-weight: bold; */
+}
+
+.thin {
+}

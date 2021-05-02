@@ -5,7 +5,7 @@ module.exports = {
     jest: true,
     node: true,
   },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:prettier/recommended'],
   parserOptions: {
     ecmaVersion: 2020,
     es6: true,
@@ -32,8 +32,8 @@ module.exports = {
         pathGroupsExcludedImportTypes: [],
       },
     ],
-
     'max-len': [1, 120, { ignoreComments: true, tabWidth: 2 }],
+    'no-async-promise-executor': ['warn'],
     // 'sort-keys': ['warn', 'asc', { caseSensitive: true, minKeys: 2, natural: false }],
   },
 };
